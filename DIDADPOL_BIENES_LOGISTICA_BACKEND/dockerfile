@@ -1,0 +1,17 @@
+FROM node:20
+
+WORKDIR /app
+
+# Copiar dependencias
+COPY package*.json ./
+
+RUN npm install 
+
+# Copiar todo el proyecto
+COPY . .
+
+# Exponer puerto
+EXPOSE 5001
+
+# Comando de inicio
+CMD ["npm", "start"]

@@ -1,0 +1,34 @@
+const { Router } = require('express');
+const { validarJWT } = require('../Middlewares/validar-jwt');
+const { checkPermission } = require('../Middlewares/validar-permiso');
+
+const {
+  postAsignacion,
+  postDevolverAsignacion,
+  listarAsignaciones
+} = require('../Controllers/solicitudes/asignaciones.controller');
+
+const router = Router();
+
+router.get(
+  '/',
+  validarJWT,
+  checkPermission('ASIGNACION_VER'),
+  listarAsignaciones
+);
+
+router.post(
+  '/',
+  validarJWT,
+  checkPermission('ASIGNAR_BIEN'),
+  postAsignacion
+);
+
+router.post(
+  '/:id/devolver',
+  validarJWT,
+  checkPermission('DEVOLVER_BIEN'),
+  postDevolverAsignacion
+);
+
+module.exports = router;
